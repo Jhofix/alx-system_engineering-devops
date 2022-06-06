@@ -1,2 +1,2 @@
 #!/bin/bash
-echo -e "$(/etc/passwd) | tail \n"
+cat /etc/passwd | tail
