@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include "main.h"
 
 /**
  * main - short description
@@ -10,5 +10,9 @@
 
 int main(void)
 {
-	printf("_putchar\n");
+	char c = "_putchar";
+	
+	_putchar(c);
+	_putchar("\n");
+	return (0);
 }
