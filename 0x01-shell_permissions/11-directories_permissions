@@ -1,2 +1,2 @@
 #!/bin/bash
-chmod -R a+x .
+chmod a+x "$(find -maxdepth 1 -type d)"
