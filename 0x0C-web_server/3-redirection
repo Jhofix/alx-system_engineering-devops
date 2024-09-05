@@ -9,8 +9,14 @@ service nginx start
 
 string="\tif (\$request_filename ~ redirect_me){\
 		\n\t\trewrite ^ https://sketchfab.com/bluepeno/models permanent;\
-	\n\t}"
+	\n\t}\n\
+	\nerror_page 404 /error404.html;\
+	location = /error404.html {\
+		\n\troot /var/www/html;\
+		\n\tinternal;\
+	}"
 
+echo "Ceci n'est pas une page" > /var/www/html/error404.html
 sed -i "53 i\ $string" /etc/nginx/sites-enabled/default
 
 if [ "$(pgrep -c nginx)" -lt 1 ]; then
