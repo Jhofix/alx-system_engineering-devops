@@ -11,7 +11,7 @@ string="\tif (\$request_filename ~ redirect_me){\
 		\n\t\trewrite ^ https://sketchfab.com/bluepeno/models permanent;\
 	\n\t}"
 
-sed -i "52 i\ $string" /etc/nginx/sites-enabled/default
+sed -i "53 i\ $string" /etc/nginx/sites-enabled/default
 
 if [ "$(pgrep -c nginx)" -lt 1 ]; then
 	service nginx start
