@@ -7,13 +7,13 @@ ufw allow 'Nginx HTTP'
 echo "Hello World!" > /var/www/html/index.nginx-debian.html
 service nginx start
 
-string='#\tif (\$request_filename ~ redirect_me){\
-		\n#\t\trewrite ^ https://sketchfab.com/bluepeno/models permanent;\
-	\n#\t}'
+string="\tif (\$request_filename ~ redirect_me){\
+		\n\t\trewrite ^ https://sketchfab.com/bluepeno/models permanent;\
+	\n\t}"
 
- sed "90 i $(echo $string)" $
- 
- if [ "$(pgrep -c nginx)" -le 0 ]; then
+sed -i "52 i\ $string" /etc/nginx/sites-enabled/default
+
+if [ "$(pgrep -c nginx)" -lt 1 ]; then
 	service nginx start
 else
 	service nginx restart
