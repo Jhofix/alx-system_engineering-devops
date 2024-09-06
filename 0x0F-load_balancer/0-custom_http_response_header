@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Install Nginx web server and set redirect 301
+# shellcheck disable=SC2154
+
+apt-get -y update
+apt-get -y install nginx
+ufw allow 'Nginx HTTP'
+echo "Hello World!" > /var/www/html/index.nginx-debian.html
+service nginx start
+
+string="\tif (\$request_filename ~ redirect_me){\
+		\n\t\trewrite ^ https://sketchfab.com/bluepeno/models permanent;\
+	\n\t}\n\
+    \n\tadd_header X-Served-By $HOSTNAME;\
+	\nerror_page 404 /error404.html;\
+	\nlocation = /error404.html {\
+		\n\troot /var/www/html;\
+		\n\tinternal;\
+	}"
+
+: << COMM
+
+        if ($request_filename ~ redirect_me){ 
+                rewrite ^ https://sketchfab.com/bluepeno/models permanent; 
+        }
+ 
+error_page 404 /error404.html; location = /error404.html { 
+        root /var/www/html; 
+        internal; 
+        add_header X-Served-By Joshua-PC; }
+COMM
+
+echo "Ceci n'est pas une page" > /var/www/html/error404.html
+sed -i "53 i\ $string" /etc/nginx/sites-enabled/default
+
+if [ "$(pgrep -c nginx)" -lt 1 ]; then
+	service nginx start
+else
+	service nginx restart
+fi
