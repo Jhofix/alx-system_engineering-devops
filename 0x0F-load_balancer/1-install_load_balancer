@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+:<< EOF
+apt-get -y update && apt-get -y upgrade
+apt-get -y install haproxy
+
+service haproxy start
+service haproxy enable
+EOF
+
+setup=$(cat << EOF
+frontend jfrontend
+    bind *:80
+    mode http
+backend nginx_servers
+    balance roundrobin
+    server web-01 100.27.3.193:80
+    server web-02 100.25.165.60
+EOF
+)
+echo "$setup" >> "/etc/haproxy/haproxy.cfg"
