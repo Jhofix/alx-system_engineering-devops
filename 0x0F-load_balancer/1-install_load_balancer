@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 # Install and configure haproxy load balancer
 
+apt-get -y update && apt-get -y upgrade
+apt-get -y install haproxy
+
+service haproxy start
+service haproxy enable
+
 setup="\
 \\\nfrontend jfrontend\n\
     \tbind *:80\n\
