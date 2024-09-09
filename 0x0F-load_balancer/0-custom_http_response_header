@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Install Nginx web server and set redirect 301
 # shellcheck disable=SC2154
+# mynote: /^server.*(((\n\t+)|\n+).+)+(?=\n})/gm  (Match a block of
+#   code starting with 'server' and ending with '}')
 
 apt-get -y update
 apt-get -y install nginx
