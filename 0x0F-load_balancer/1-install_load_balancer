@@ -19,3 +19,5 @@ backend nginx_servers\n\
     \tserver web-02 100.25.165.60:80"
 
 sed -i "\$a$setup" "/etc/haproxy/haproxy.cfg"
+
+service haproxy restart
